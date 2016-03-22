@@ -10,6 +10,8 @@
 
 [零基础JavaScript编码（三）](https://github.com/wadeDra/baiduTask/blob/master/02-js/task15/index.html)
 
+[零基础JavaScript编码（四）](https://github.com/wadeDra/baiduTask/blob/master/02-js/task16/)
+
 
 
 #第一阶段
