@@ -38,13 +38,27 @@
             return num2[1] - num1[1];
         });
 
+/*
         var result = '';
-        /*进行li的拼接 虽然想用creatElemnt,但是没有找到好的方式,希望点拨*/
+        /!*进行li的拼接 虽然想用creatElemnt,但是没有找到好的方式,希望点拨*!/
         for (var i = 1; i <= newData.length; i++) {
             result += '<li>第' + i + '名: ' + newData[i - 1].join(', ') + '</li>';
         }
 
         document.getElementById('aqi-list').innerHTML = result;
+*/
+
+        /*创建文档碎片节点, 替代上面维护性差的方法. */
+
+        var liFragment = document.createDocumentFragment();
+        for (var i = 1; i <= newData.length; i++) {
+            var li = document.createElement('li');
+            var text = document.createTextNode('第' + i + '名: ' + newData[i - 1].join(', '));
+            li.appendChild(text);
+            liFragment.appendChild(li);
+        }
+        document.getElementById('aqi-list').appendChild(liFragment);
+
     })();
 
 </script>
