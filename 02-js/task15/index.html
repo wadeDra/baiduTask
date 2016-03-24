@@ -73,13 +73,19 @@
      * 格式见ul中的注释的部分
      */
     function render(data) {
-        var result = '';
-        /*进行li的拼接 比较乱,但是没有找到好的方式,希望点拨*/
+        var liFragment = document.createDocumentFragment();
         for (var i = 1; i <= data.length; i++) {
-            result += '<li>第' + i + '名: ' + data[i - 1].join('空气质量：<b>') + '</b></li>';
+            var li = document.createElement('li');
+            var text1 = document.createTextNode('第' + i + '名: ' + data[i - 1][0] + '空气质量: ');
+            var b = document.createElement('b');
+            var text2 = document.createTextNode(data[i - 1][1]);
+            li.appendChild(text1);
+            b.appendChild(text2);
+            li.appendChild(b);
+            liFragment.appendChild(li);
         }
+        document.getElementById('resort').appendChild(liFragment);
 
-        document.getElementById('resort').innerHTML = result;
     }
 
     function btnHandle() {
@@ -102,6 +108,7 @@
             else
                 target['on' + type] = func;
         }
+
         addEvent(document.getElementById('sort-btn'), 'click', btnHandle)
     }
 

@@ -35,6 +35,32 @@ function addEvent(elm, type, func) {
     else
         elm['on' + type] = func;
 }
+
+/*定义一个Element对象*/
+function Element(tagName, children) {
+    this.tagName = tagName
+    this.children = children
+}
+
+/**
+ * 虚拟DOM方法,参照知乎
+ * 定义了一个Element对象的render方法
+ *
+ */
+
+Element.prototype.render = function () {
+    var el = document.createElement(this.tagName) // 根据tagName构建
+    var children = this.children || []
+    children.forEach(function (child) {
+        var childEl = (child instanceof Element)
+            ? child.render() // 如果子节点也是虚拟DOM，递归构建DOM节点
+            : document.createTextNode(child) // 如果字符串，只构建文本节点
+        el.appendChild(childEl)
+    });
+    return el
+}
+
+
 /**
  * 从用户输入中获取数据，向aqiData中增加一条数据
  * 然后渲染aqi-list列表，增加新增的数据
@@ -64,12 +90,26 @@ function addAqiData() {
  * 渲染aqi-table表格
  */
 function renderAqiList() {
-    var result = '<tr> <td>城市</td><td>空气质量</td><td>操作</td> </tr>';
+    var aqiFragment = document.createDocumentFragment();
+    var tr = new Element('tr', [
+        new Element('td', ['城市']),
+        new Element('td', ['空气质量']),
+        new Element('td', ['操作'])
+    ]);
+    aqiFragment.appendChild(tr.render());
     for (var data in aqiData) {
-        result += '<tr> <td>' + data + '</td><td>' + aqiData[data] + '</td><td><button>删除</button></td> </tr>';
+        var result = new Element('tr', [
+            new Element('td', [data]),
+            new Element('td', [aqiData[data]]),
+            new Element('td', [
+                new Element('button', ['删除'])
+            ])
+        ]);
+        aqiFragment.appendChild(result.render());
     }
+    aqiTable.innerHTML = '';
     if (_do)
-        aqiTable.innerHTML = result;
+        aqiTable.appendChild(aqiFragment);
 }
 
 /**
@@ -88,7 +128,7 @@ function addBtnHandle() {
 function delBtnHandle(e) {
     // do sth.
     /*根据event事件获得子节点元素*/
-    var del = e.target.parentNode.parentNode.childNodes[1].innerHTML;
+    var del = e.target.parentNode.parentNode.childNodes[0].innerHTML;
     /**
      *
      * 使用delete删除对象中的属性
