@@ -3,6 +3,46 @@
 <head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 01</title>
+    <style>
+        .aqi-chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            line-height: 500px;
+            text-align: center;
+            font-size: 0;
+        }
+
+        .aqi-chart-wrap ul li {
+            list-style: none;
+            text-align: justify;
+            display: inline-block;
+            width: 10px;
+            border: 1px solid white;
+            vertical-align: bottom;
+            background: rgb(0, 0, 0);
+            bottom: 0;
+        }
+
+
+        .month li {
+            width: 100px !important;
+        }
+
+        .week li {
+            width: 50px !important;
+        }
+
+        .aqi-chart-wrap ul {
+            padding: 0;
+            margin: 0 auto;
+            vertical-align: text-bottom;
+        }
+        .aqi-chart-wrap ul:before {
+            content: '';
+            visibility: hidden;
+        }
+    </style>
 </head>
 <body>
 <fieldset id="form-gra-time">
@@ -15,11 +55,12 @@
 <fieldset>
     <legend>请选择查看的城市：</legend>
     <select id="city-select">
-        <option>北京</option>
     </select>
 </fieldset>
 
 <div class="aqi-chart-wrap">
+
+
 </div>
 <script src="index.js"></script>
 </body>
